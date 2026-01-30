@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FunPay Super Bot</title>
+    <style>
+        :root {
+            --primary: #7289da;
+            --bg: #1e222b;
+            --card: #2b303b;
+            --text: #ffffff;
+            --text-muted: #9ba0aa;
+            --success: #2ecc71;
+            --danger: #ff4d4d;
+        }
+
+        body {
+            width: 320px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #161920 0%, #1e222b 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand span {
+            color: var(--primary);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+            font-size: 13px;
+        }
+
+        .tab-btn.active {
+            color: var(--text);
+            border-bottom-color: var(--primary);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Content */
+        .tab-content {
+            padding: 20px;
+            display: none;
+            height: 350px;
+            /* Fixed height for scrolling */
+            overflow-y: auto;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Controls */
+        .control-group {
+            margin-bottom: 20px;
+            background: var(--card);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .control-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .control-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            ;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--success);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Inputs */
+        .input-group {
+            margin-top: 10px;
+        }
+
+        input[type="number"] {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            width: 60px;
+        }
+
+        /* Stats */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .mini-stat {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .mini-stat h4 {
+            margin: 0 0 5px 0;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .mini-stat p {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Links */
+        .btn-action {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .btn-action:hover {
+            filter: brightness(1.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="brand">🔥 FunPay <span>Super Bot</span></div>
+        <div style="font-size: 10px; color: #444;">v2.0</div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('dashboard')">Dashboard</button>
+        <button class="tab-btn" onclick="openTab('settings')">Settings</button>
+        <button class="tab-btn" onclick="openTab('about')">About</button>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="dashboard" class="tab-content active">
+        <div class="control-group">
+            <div>
+                <div class="control-label">Auto-Raise</div>
+                <div class="control-desc">Automatically raise offers</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="toggleAutoRaise">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="stat-grid">
+            <div class="mini-stat">
+                <h4>Raised Today</h4>
+                <p id="statRaised">0</p>
+            </div>
+            <div class="mini-stat">
+                <h4>New Orders</h4>
+                <p id="statOrders">0</p>
+            </div>
+        </div>
+
+        <button id="openTrackerBtn" class="btn-action" style="margin-top: 20px; background: #2ecc71;">
+            Open Sales Tracker
+        </button>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="settings" class="tab-content">
+        <div class="control-group">
+            <div>
+                <div class="control-label">Raise Interval</div>
+                <div class="control-desc">Minutes between raises</div>
+                <div class="input-group">
+                    <input type="number" id="raiseInterval" value="5" min="1"> min
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div>
+                <div class="control-label">Notifications</div>
+                <div class="control-desc">System notifications</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="toggleNotifs" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <button id="saveSettings" class="btn-action">Save Settings</button>
+    </div>
+
+    <!-- About Tab -->
+    <div id="about" class="tab-content">
+        <p style="text-align: center; color: var(--text-muted);">
+            FunPay Super Bot v2.0<br>
+            Created by <span style="color: var(--primary)">AKIRA</span>
+        </p>
+        <p style="font-size: 12px; line-height: 1.5; color: #888;">
+            This extension helps you automate your sales workflow. Ensure you keep the browser open for auto-raise to
+            work optimally.
+        </p>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

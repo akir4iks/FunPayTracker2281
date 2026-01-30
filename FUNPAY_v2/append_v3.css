@@ -1,0 +1,57 @@
+/* Snowfall & Drifts */
+.nav-links li,
+button,
+.stat-card,
+.template-chip,
+.goal-widget,
+.inventory-summary-card {
+    position: relative;
+    overflow: visible !important;
+    z-index: 1;
+}
+
+/* Base Drift State */
+.nav-links li::after,
+button::after,
+.template-chip::after,
+.goal-widget::after,
+.inventory-summary-card::after {
+    content: '';
+    position: absolute;
+    /* Use variables set by JS, with defaults */
+    top: var(--d-top, -5px);
+    left: var(--d-left, 0);
+    width: var(--d-width, 100%);
+    height: var(--d-height, 10px);
+
+    background: radial-gradient(circle at 30% 0%, #ffffff 40%, #e3e8ee 100%);
+    border-radius: var(--d-radius, 50% 50% 20% 20%);
+
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: opacity 1s, transform 15s linear;
+    pointer-events: none;
+    z-index: 1000;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15));
+}
+
+/* Active Drifts */
+body.snow-drifts-visible .nav-links li::after,
+body.snow-drifts-visible button::after,
+body.snow-drifts-visible .template-chip::after,
+body.snow-drifts-visible .goal-widget::after,
+body.snow-drifts-visible .inventory-summary-card::after {
+    opacity: 1;
+    transform: scaleY(1.5);
+}
+
+/* Melt Quickly */
+body.snow-drifts-visible .nav-links li:hover::after,
+body.snow-drifts-visible button:hover::after,
+body.snow-drifts-visible .template-chip:hover::after,
+body.snow-drifts-visible .inventory-summary-card:hover::after {
+    opacity: 0;
+    transform: scaleY(0);
+    transition: all 0.5s ease-out;
+}

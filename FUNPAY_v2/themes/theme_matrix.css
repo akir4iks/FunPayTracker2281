@@ -1,0 +1,350 @@
+.matrix-preview {
+    background: #000;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    font-size: 8px;
+    font-family: monospace;
+}
+
+body.matrix-theme .search-box {
+    border: 1px solid #1a441a;
+    background: rgba(0, 10, 0, 0.8);
+}
+
+body.matrix-theme .search-box input {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* --- Matrix Theme Premium Polish --- */
+
+body.matrix-theme {
+    /* Deep deep green/black background */
+    --bg-color: #020202;
+    /* Semi-transparent dark panels */
+    --sidebar-bg: rgba(5, 10, 5, 0.95);
+    --card-bg: rgba(0, 15, 0, 0.85);
+
+    /* Neon Green Accents */
+    --primary-color: #00ff41;
+    --accent-color: #00cc33;
+
+    /* Text */
+    --text-main: #e0f0e0;
+    --text-muted: #4a704a;
+
+    /* Borders */
+    --border-color: #0a330a;
+
+    /* Status Colors */
+    --danger-color: #ff3333;
+    --success-color: #00ff41;
+
+    /* Font - more readable but still techy */
+    --font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+
+    /* Global Glow */
+    --neon-glow: 0 0 10px rgba(0, 255, 65, 0.2);
+}
+
+/* Background & Canvas */
+body.matrix-theme .aurora-bg {
+    display: none;
+}
+
+body.matrix-theme .content {
+    background: transparent !important;
+}
+
+body.matrix-theme #matrixCanvas {
+    display: block !important;
+    opacity: 0.6;
+}
+
+/* Typography Overrides */
+body.matrix-theme h1,
+body.matrix-theme h2,
+body.matrix-theme h3 {
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Cards (Glassmorphism + Tech Borders) */
+body.matrix-theme .sidebar,
+body.matrix-theme .balance-card,
+body.matrix-theme .stat-card,
+body.matrix-theme .chart-container,
+body.matrix-theme .modal,
+body.matrix-theme .top-list-container {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(0, 255, 65, 0.05) !important;
+    backdrop-filter: blur(5px);
+    border-radius: 4px;
+    /* Sharper corners for tech look */
+}
+
+/* Hover effects for cards */
+body.matrix-theme .stat-card:hover,
+body.matrix-theme .order-card:hover {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.15) !important;
+    transform: translateY(-2px);
+}
+
+/* Progress Bars Fix */
+body.matrix-theme .progress-bar-bg {
+    background-color: rgba(0, 50, 0, 0.5) !important;
+    border: 1px solid #1a331a;
+}
+
+body.matrix-theme .progress-bar-fill {
+    background: linear-gradient(90deg, #004400, #00ff41) !important;
+    box-shadow: 0 0 8px #00ff41 !important;
+}
+
+/* Buttons */
+body.matrix-theme .btn-primary,
+body.matrix-theme .fab-btn,
+body.matrix-theme .template-chip:hover {
+    background: #002200 !important;
+    border: 1px solid #00ff41 !important;
+    color: #00ff41 !important;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
+    border-radius: 2px;
+}
+
+body.matrix-theme .btn-primary:hover {
+    background: #00ff41 !important;
+    color: #000 !important;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+}
+
+body.matrix-theme .btn-secondary {
+    border-color: #1a441a !important;
+    color: #88aa88 !important;
+}
+
+body.matrix-theme .btn-secondary:hover {
+    border-color: #00ff41 !important;
+    color: #00ff41 !important;
+}
+
+/* Inputs */
+body.matrix-theme input,
+body.matrix-theme select,
+body.matrix-theme textarea {
+    background: rgba(0, 10, 0, 0.8) !important;
+    border: 1px solid #1a441a !important;
+    color: #00ff41 !important;
+    font-family: var(--font-family);
+    border-radius: 2px;
+}
+
+body.matrix-theme input:focus {
+    border-color: #00ff41 !important;
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.2) !important;
+}
+
+/* Navigation */
+body.matrix-theme .nav-links li.active {
+    background: linear-gradient(90deg, rgba(0, 255, 65, 0.1), transparent) !important;
+    border-left: 3px solid #00ff41;
+    color: #00ff41;
+}
+
+body.matrix-theme .nav-links li:hover:not(.active) {
+    background: rgba(0, 255, 65, 0.05);
+    color: #ccffcc;
+}
+
+/* Order List Items */
+body.matrix-theme .order-card {
+    background: rgba(0, 15, 0, 0.6) !important;
+    border-bottom: 1px solid #0a220a !important;
+    border-radius: 2px;
+}
+
+/* Notes specific for Matrix - CRT Monitor Style */
+body.matrix-theme .note-card {
+    background-color: #000 !important;
+    border: 3px solid #333 !important;
+    border-top: 10px solid #333 !important;
+    /* Monitor bezel top */
+    border-bottom: 10px solid #333 !important;
+    /* Monitor bezel bottom */
+    border-radius: 10px !important;
+    color: #00ff41 !important;
+    box-shadow: 0 0 0 2px #111, 0 0 15px rgba(0, 255, 65, 0.2) !important;
+    position: relative;
+    overflow: hidden;
+    padding: 15px !important;
+    min-height: 120px;
+}
+
+/* Inner Screen Glow */
+body.matrix-theme .note-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(0, 255, 65, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Scanlines for Note */
+body.matrix-theme .note-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 6px 100%;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.6;
+}
+
+body.matrix-theme .note-card:hover {
+    border-color: #444 !important;
+    box-shadow: 0 0 0 2px #222, 0 0 25px rgba(0, 255, 65, 0.4) !important;
+    transform: scale(1.02);
+}
+
+body.matrix-theme .note-text {
+    color: #00ff41 !important;
+    font-family: 'Consolas', monospace;
+    font-size: 13px;
+    text-shadow: 0 0 4px rgba(0, 255, 65, 0.6);
+    position: relative;
+    z-index: 3;
+}
+
+/* Hide edit/delete buttons until hover to simulate "off" state or just keep clean */
+body.matrix-theme .note-actions {
+    z-index: 4;
+    opacity: 0.5;
+}
+
+body.matrix-theme .note-card:hover .note-actions {
+    opacity: 1;
+}
+
+/* CRT Overlay - Improved */
+body.matrix-theme::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    z-index: 9999;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+/* Subtle Flicker Animation */
+@keyframes crt-flicker {
+    0% {
+        opacity: 0.98;
+    }
+
+    5% {
+        opacity: 0.95;
+    }
+
+    10% {
+        opacity: 0.99;
+    }
+
+    15% {
+        opacity: 0.96;
+    }
+
+    100% {
+        opacity: 0.98;
+    }
+}
+
+body.matrix-theme {
+    animation: crt-flicker 0.2s infinite;
+}
+
+/* Fix Calendar Heatmap Contrast for Matrix Theme */
+body.matrix-theme .heatmap-day.l2,
+body.matrix-theme .heatmap-day.l3,
+body.matrix-theme .heatmap-day.l4 {
+    color: #000000 !important;
+    font-weight: 700;
+}
+
+body.matrix-theme .heatmap-day.l2 .heatmap-profit,
+body.matrix-theme .heatmap-day.l3 .heatmap-profit,
+body.matrix-theme .heatmap-day.l4 .heatmap-profit {
+    color: #000000 !important;
+    text-shadow: none !important;
+    font-weight: 800 !important;
+}
+
+body.matrix-theme .heatmap-day.l2 .heatmap-count,
+body.matrix-theme .heatmap-day.l3 .heatmap-count,
+body.matrix-theme .heatmap-day.l4 .heatmap-count {
+    color: #003300 !important;
+    text-shadow: none !important;
+    font-weight: 700 !important;
+}
+
+/* Fix Section Badge Contrast */
+body.matrix-theme .section-badge,
+body.matrix-theme .count-badge,
+body.matrix-theme .badge,
+body.matrix-theme #ordersCountBadge {
+    color: #000000 !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+    background: #00ff41 !important;
+    box-shadow: 0 0 5px #00ff41;
+}
+
+/* Scrollbar */
+body.matrix-theme::-webkit-scrollbar-track {
+    background: #000;
+}
+
+body.matrix-theme::-webkit-scrollbar-thumb {
+    background: #003300;
+    border: 1px solid #00ff41;
+}
+
+/* Refined Rental Styles for Matrix */
+body.matrix-theme .rental-timer {
+    background: rgba(0, 15, 0, 0.9) !important;
+    border: 1px solid #1a441a !important;
+    padding: 2px 8px;
+    border-radius: 2px;
+}
+
+body.matrix-theme .rental-active {
+    color: #00ff41 !important;
+    text-shadow: 0 0 8px #00ff41;
+}
+
+body.matrix-theme .rental-expired {
+    color: #ff3333 !important;
+    text-shadow: 0 0 8px #ff3333;
+}
+
+body.matrix-theme .finish-at-compact {
+    color: #4a704a;
+    opacity: 0.8;
+}

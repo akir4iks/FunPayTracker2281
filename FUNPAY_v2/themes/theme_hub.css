@@ -1,0 +1,170 @@
+/* --- Hub Theme Premium Style --- */
+
+body.hub-theme {
+    /* Hub Palette */
+    --bg-color: #000000;
+    --sidebar-bg: #1b1b1b;
+    --card-bg: #1b1b1b;
+    --primary-color: #ff9900;
+    /* Iconic Orange */
+    --accent-color: #e68a00;
+    --text-main: #ffffff;
+    --text-muted: #888888;
+    --border-color: #282828;
+
+    /* Status Colors */
+    --danger-color: #ff3333;
+    --success-color: #ff9900;
+    /* Using orange for success to match brand */
+    --warning-color: #ffa500;
+
+    --font-family: 'Inter', sans-serif;
+    --radius-lg: 6px;
+    /* Slightly sharper, professional look */
+    --radius-md: 4px;
+}
+
+/* Background Enhancement */
+body.hub-theme .aurora-bg {
+    filter: none;
+    opacity: 1;
+    background: var(--bg-color);
+}
+
+body.hub-theme .blob {
+    display: none;
+}
+
+/* Sidebar Styling */
+body.hub-theme .sidebar {
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+}
+
+body.hub-theme .nav-links li {
+    border-radius: 4px;
+    margin: 2px 8px;
+}
+
+body.hub-theme .nav-links li.active {
+    background-color: var(--primary-color);
+    color: #000000;
+    /* Black text on orange */
+    font-weight: 700;
+}
+
+body.hub-theme .nav-links li:hover:not(.active) {
+    background-color: #282828;
+    color: var(--primary-color);
+}
+
+body.hub-theme .logo {
+    color: var(--primary-color);
+}
+
+/* Cards & Components */
+body.hub-theme .balance-card,
+body.hub-theme .stat-card,
+body.hub-theme .chart-container,
+body.hub-theme .order-card,
+body.hub-theme .top-list-container,
+body.hub-theme .modal,
+body.hub-theme .inventory-summary-card {
+    background: #1b1b1b !important;
+    border: 1px solid #282828 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 6px !important;
+}
+
+body.hub-theme .order-card:hover {
+    border-color: var(--primary-color) !important;
+    background: #222222 !important;
+}
+
+/* Button Styling */
+body.hub-theme .btn-primary {
+    background: var(--primary-color) !important;
+    color: #000000 !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+}
+
+body.hub-theme .btn-primary:hover {
+    background: white !important;
+    color: #000000 !important;
+    transform: scale(1.02);
+}
+
+body.hub-theme .btn-secondary {
+    background: #333333;
+    color: #ffffff;
+    border: none;
+}
+
+body.hub-theme .btn-secondary:hover {
+    background: #444444;
+}
+
+/* Inputs */
+body.hub-theme input,
+body.hub-theme select,
+body.hub-theme textarea,
+body.hub-theme .search-box {
+    background: #121212 !important;
+    border: 1px solid #282828 !important;
+    color: #ffffff !important;
+    border-radius: 4px;
+}
+
+body.hub-theme input:focus {
+    border-color: var(--primary-color) !important;
+}
+
+/* Scrollbar */
+body.hub-theme::-webkit-scrollbar {
+    width: 10px;
+}
+
+body.hub-theme::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+body.hub-theme::-webkit-scrollbar-track {
+    background: #111111;
+}
+
+/* Dashboard Specifics */
+body.hub-theme .balance-amount {
+    color: var(--primary-color);
+}
+
+body.hub-theme .progress-bar-bg {
+    background: #282828 !important;
+}
+
+body.hub-theme .progress-bar-fill {
+    background: var(--primary-color) !important;
+    box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+}
+
+body.hub-theme .badge {
+    background: var(--primary-color);
+    color: #000000;
+    font-weight: 800;
+}
+
+/* Logo Badge Emulation */
+body.hub-theme .logo span::after {
+    content: 'HUB';
+    background: var(--primary-color);
+    color: #000000;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 10px;
+    margin-left: 5px;
+    vertical-align: middle;
+}

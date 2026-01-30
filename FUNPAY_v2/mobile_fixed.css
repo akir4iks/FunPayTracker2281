@@ -1,0 +1,244 @@
+/* ============================================================ */
+/* FUNPAY TRACKER - FINAL MOBILE FIXED (v3)                    */
+/* ============================================================ */
+
+/* Global Mobile Fixes for screens <= 600px */
+@media (max-width: 600px) {
+    .mobile-only {
+        display: block !important;
+    }
+
+    header {
+        height: 60px !important;
+        padding: 0 15px !important;
+        background: var(--sidebar-bg);
+        border-bottom: 1px solid var(--border-color);
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .header-left h1 {
+        font-size: clamp(16px, 4vw, 18px) !important;
+        margin: 0 !important;
+    }
+
+    .header-controls {
+        gap: 10px !important;
+    }
+
+    .currency-selector span {
+        display: none;
+    }
+
+    .sidebar {
+        position: fixed !important;
+        bottom: 15px !important;
+        left: 15px !important;
+        right: 15px !important;
+        width: calc(100% - 30px) !important;
+        height: 65px !important;
+        background: rgba(26, 29, 36, 0.95) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 20px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-around !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+        z-index: 1000 !important;
+    }
+
+    .logo,
+    .creator-credit,
+    .sidebar-footer {
+        display: none !important;
+    }
+
+    .nav-links {
+        display: flex !important;
+        flex-direction: row !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        justify-content: space-around !important;
+        list-style: none !important;
+    }
+
+    .nav-links li {
+        flex: 1 !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+        height: 100% !important;
+        justify-content: center !important;
+        align-items: center !important;
+        background: transparent !important;
+        color: var(--text-muted) !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+        padding: 0 !important;
+    }
+
+    .nav-links li:nth-child(n+6) {
+        display: none !important;
+    }
+
+    /* Hide overflow tabs */
+
+    .nav-links li i {
+        font-size: 20px !important;
+        margin: 0 !important;
+    }
+
+    .nav-links li span {
+        display: block !important;
+        font-size: 10px !important;
+        font-weight: 500 !important;
+    }
+
+    .nav-links li.active {
+        color: var(--primary-color) !important;
+    }
+
+    /* Mobile Drawer (Sidebar reuse) */
+    .sidebar.mobile-open {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: rgba(15, 17, 21, 0.98) !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        z-index: 2000 !important;
+        display: flex !important;
+        padding: 40px !important;
+        border-radius: 0 !important;
+    }
+
+    .sidebar.mobile-open .logo {
+        display: flex !important;
+        margin-bottom: 30px !important;
+    }
+
+    .sidebar.mobile-open .nav-links {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        height: auto !important;
+    }
+
+    .sidebar.mobile-open .nav-links li {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 15px !important;
+        padding: 12px 20px !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-radius: 12px !important;
+        flex: none !important;
+        width: 100% !important;
+        justify-content: flex-start !important;
+    }
+
+    .sidebar.mobile-open .nav-links li:nth-child(n+6) {
+        display: flex !important;
+    }
+
+    .sidebar.mobile-open .nav-links li i {
+        font-size: 22px !important;
+    }
+
+    .sidebar.mobile-open .nav-links li span {
+        font-size: 15px !important;
+    }
+
+    .sidebar.mobile-open .sidebar-footer {
+        display: flex !important;
+        margin-top: 30px !important;
+    }
+
+    .content {
+        flex: 1 !important;
+        height: calc(100vh - 140px) !important;
+        overflow-y: auto !important;
+        padding: 20px 15px 40px 15px !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+    }
+
+    .stat-card {
+        padding: 15px !important;
+        border-radius: 16px !important;
+    }
+
+    .stat-val {
+        font-size: 18px !important;
+    }
+
+    .order-card,
+    .inventory-table tr,
+    .expense-card {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        padding: 16px !important;
+        border-radius: 16px !important;
+        gap: 12px !important;
+    }
+
+    .order-amount,
+    .inventory-table td {
+        width: 100% !important;
+        justify-content: space-between !important;
+        padding-top: 10px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    .modal {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        border-radius: 24px 24px 0 0 !important;
+        max-height: 85vh !important;
+        transform: translateY(100%) !important;
+        transition: transform 0.4s ease-out !important;
+        padding-top: 35px !important;
+    }
+
+    .modal-overlay.open .modal {
+        transform: translateY(0) !important;
+    }
+
+    .fab-container {
+        bottom: 95px !important;
+        right: 20px !important;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .sidebar {
+        width: 85px !important;
+    }
+
+    .sidebar span,
+    .creator-credit {
+        display: none !important;
+    }
+
+    .nav-links li {
+        justify-content: center !important;
+        padding: 15px 0 !important;
+    }
+}

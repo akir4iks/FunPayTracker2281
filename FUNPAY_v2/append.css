@@ -1,0 +1,195 @@
+/* Inventory Summary */
+.inventory-summary-card {
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(30, 34, 43, 0.5) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-top: 20px;
+    text-align: right;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.inventory-total-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-main);
+    text-shadow: 0 0 10px rgba(114, 137, 218, 0.3);
+}
+
+/* Achievements */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.ach-card-group {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ach-card-group h3 {
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.ach-stages-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.ach-stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.5;
+    transform: scale(0.95);
+    border: 1px solid transparent;
+}
+
+.ach-stage.unlocked {
+    opacity: 1;
+    transform: scale(1);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.ach-stage.unlocked:hover {
+    transform: translateY(-5px);
+}
+
+.ach-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+    filter: grayscale(100%);
+    transition: filter 0.5s;
+    object-fit: contain;
+}
+
+.ach-stage.unlocked .ach-icon {
+    filter: grayscale(0%) drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+}
+
+.ach-name {
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.ach-req {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+/* Toast Notifications for Achievements */
+.achievement-toast {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(26, 29, 36, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--primary-color);
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+    width: 300px;
+    animation: slideInRight 0.5s forwards;
+    pointer-events: none;
+}
+
+.achievement-toast img {
+    width: 40px;
+    height: 40px;
+}
+
+.achievement-toast h4 {
+    font-size: 14px;
+    color: var(--primary-color);
+    margin: 0 0 4px 0;
+}
+
+.achievement-toast p {
+    font-size: 12px;
+    color: white;
+    margin: 0;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Snowfall & Drifts */
+body.snow-active .nav-links li,
+body.snow-active button,
+body.snow-active .stat-card,
+body.snow-active .template-chip,
+body.snow-active .goal-widget {
+    position: relative;
+}
+
+body.snow-active .nav-links li::after,
+body.snow-active button::after,
+body.snow-active .template-chip::after,
+body.snow-active .goal-widget::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: white;
+    border-radius: 50% 50% 20% 20%;
+    filter: blur(1px);
+    opacity: 0;
+    transform: translateY(-2px) scaleY(0);
+    transform-origin: top;
+    transition: opacity 2s ease-in, transform 10s linear;
+    pointer-events: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}
+
+/* Accumulate */
+body.snow-active .nav-links li::after,
+body.snow-active button::after,
+body.snow-active .template-chip::after,
+body.snow-active .goal-widget::after {
+    opacity: 0.9;
+    transform: translateY(-4px) scaleY(1);
+}
+
+/* Melt */
+body.snow-active .nav-links li:hover::after,
+body.snow-active button:hover::after,
+body.snow-active .template-chip:hover::after {
+    opacity: 0;
+    transform: translateY(0) scaleY(0);
+    transition: all 0.5s;
+}

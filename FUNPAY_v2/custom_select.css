@@ -1,0 +1,144 @@
+/* Custom Select */
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    min-width: 120px;
+}
+
+.custom-select-wrapper select {
+    display: none;
+    /* Hide native select */
+}
+
+.select-selected {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-main);
+    padding: 10px 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    /* Ensure items stick together on left */
+    align-items: center;
+    font-size: 14px;
+    transition: all 0.2s;
+    height: 42px;
+    /* Fixed height for consistency */
+}
+
+/* Ensure icon has fixed width and spacing */
+.custom-select-wrapper i {
+    width: 18px;
+    text-align: center;
+    margin-right: 15px;
+    /* Increased spacing as requested */
+    color: var(--primary-color);
+}
+
+.select-selected:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.select-selected.select-arrow-active {
+    border-color: var(--primary-color);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.select-selected:after {
+    content: "▼";
+    font-size: 10px;
+    color: var(--text-muted);
+    transition: transform 0.3s;
+    margin-left: auto;
+    /* Push arrow to the far right */
+}
+
+.select-selected.select-arrow-active:after {
+    transform: rotate(180deg);
+}
+
+.select-items {
+    position: absolute;
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    /* High z-index */
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-bottom-left-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    display: none;
+    /* Hidden by default */
+    animation: slideDown 0.2s ease-out forwards;
+}
+
+.select-items div {
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    font-size: 14px;
+    transition: background 0.2s;
+    display: flex;
+    /* For alignment */
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+}
+
+.select-items div:last-child {
+    border-bottom: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+    background-color: rgba(114, 137, 218, 0.1);
+    /* Primary color tint */
+    color: var(--primary-color);
+}
+
+.select-hide {
+    display: none;
+}
+
+.select-show {
+    display: block;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar for select items */
+.select-items::-webkit-scrollbar {
+    width: 6px;
+}
+
+.select-items::-webkit-scrollbar-track {
+    background: #161920;
+}
+
+.select-items::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 3px;
+}
+
+.select-items::-webkit-scrollbar-thumb:hover {
+    background: #444;
+}

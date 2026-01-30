@@ -1,0 +1,91 @@
+/* Snowfall & Drifts */
+.nav-links li:nth-child(-n+2),
+button,
+.stat-card,
+.template-chip:not(.add-tpl),
+.goal-widget,
+.inventory-summary-card {
+    position: relative;
+    overflow: visible !important;
+    z-index: 1;
+}
+
+/* Base Drift State */
+.nav-links li:nth-child(-n+2)::after,
+button::after,
+.stat-card::after,
+.template-chip:not(.add-tpl)::after,
+.goal-widget::after,
+.inventory-summary-card::after {
+    content: '';
+    position: absolute;
+    top: var(--d-top, -8px);
+    left: 0;
+    width: 100%;
+    height: var(--d-height, 12px);
+
+    /* Shape comes from JS-generated gradients (multiple bumps) */
+    background: var(--d-bg, transparent);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: opacity 1s, transform 15s linear;
+    pointer-events: none;
+    z-index: 1000;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.15));
+}
+
+/* Active Drifts */
+body.snow-drifts-visible .nav-links li:nth-child(-n+2)::after,
+body.snow-drifts-visible button::after,
+body.snow-drifts-visible .stat-card::after,
+body.snow-drifts-visible .template-chip:not(.add-tpl)::after,
+body.snow-drifts-visible .goal-widget::after,
+body.snow-drifts-visible .inventory-summary-card::after {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+/* Melt Quickly */
+body.snow-drifts-visible .nav-links li:hover::after,
+body.snow-drifts-visible button:hover::after,
+body.snow-drifts-visible .template-chip:hover::after,
+body.snow-drifts-visible .inventory-summary-card:hover::after {
+    opacity: 0;
+    transform: scaleY(0);
+    transition: all 0.5s ease-out;
+}
+
+/* Form Validation */
+.is-invalid {
+    border-color: var(--danger-color) !important;
+    box-shadow: 0 0 5px rgba(255, 77, 77, 0.3) !important;
+}
+
+.error-message {
+    color: var(--danger-color);
+    font-size: 11px;
+    margin-top: 4px;
+    display: none;
+    animation: slideDownFade 0.3s ease-out forwards;
+}
+
+.is-invalid+.error-message,
+.amount-row:has(.is-invalid)+.error-message {
+    display: block;
+}
+
+@keyframes slideDownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

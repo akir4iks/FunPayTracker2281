@@ -1,0 +1,16 @@
+{
+    "name": "FunPay Tracker",
+    "short_name": "FP Tracker",
+    "description": "Учёт продаж для FunPay",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#0f1115",
+    "theme_color": "#1e222b",
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

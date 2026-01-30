@@ -1,0 +1,432 @@
+.vk-preview {
+    background: #4a76a8;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+body.vk-theme {
+    --bg-color: #edeef0;
+    --sidebar-bg: #edeef0;
+    --card-bg: #ffffff;
+    --primary-color: #4a76a8;
+    --accent-color: #5181b8;
+    --border-color: #d7d8db;
+    --text-main: #000000;
+    --text-muted: #828282;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Open Sans', 'Helvetica Neue', 'Segoe UI', Tahoma, sans-serif !important;
+}
+
+body.vk-theme .aurora-bg {
+    background: #edeef0;
+    opacity: 1;
+    z-index: -1;
+}
+
+body.vk-theme .aurora-bg .blob {
+    display: none;
+}
+
+body.vk-theme .sidebar {
+    background: #edeef0;
+    border-right: none;
+    padding-top: 60px;
+}
+
+body.vk-theme .nav-links li {
+    border-radius: 0;
+    padding: 8px 16px;
+    margin-bottom: 0;
+    color: #2b587a;
+    font-size: 13px;
+}
+
+body.vk-theme .nav-links li:hover {
+    background: #dae1e8;
+}
+
+body.vk-theme .nav-links li.active {
+    background: #dae1e8;
+    color: #000;
+    font-weight: bold;
+}
+
+body.vk-theme .nav-links li i {
+    color: #abbac7;
+}
+
+body.vk-theme header {
+    background: #4a76a8;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48px;
+    z-index: 1000;
+    padding: 0 20px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 1px 0 0 #d7d8db;
+}
+
+body.vk-theme header h1 {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: normal;
+    opacity: 0.8;
+}
+
+/* App Branding in VK Header */
+body.vk-theme header .header-left::before {
+    content: "FP Tracker";
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 12px;
+    display: inline-block;
+}
+
+body.vk-theme .content {
+    margin-top: 48px;
+    background: #edeef0 !important;
+}
+
+body.vk-theme .balance-card,
+body.vk-theme .stat-card,
+body.vk-theme .order-card,
+body.vk-theme .note-card {
+    background: #ffffff;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e7e8ec;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    clip-path: none !important;
+}
+
+/* Visibility fixes for buttons on white */
+body.vk-theme .template-chip {
+    background: #5181b8 !important;
+    border: 1px solid #4a76a8 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+body.vk-theme .template-chip i {
+    color: #ffffff !important;
+}
+
+body.vk-theme .template-chip:hover {
+    background: #5b88bd !important;
+    color: #ffffff !important;
+}
+
+body.vk-theme .template-chip.add-tpl {
+    background: #f0f2f5 !important;
+    border: 1px dashed #adb5bd !important;
+    color: #868e96 !important;
+}
+
+body.vk-theme .inventory-summary-card {
+    background: #fafbfc;
+    border: 1px solid #e7e8ec;
+    color: #000;
+}
+
+/* Form Inputs & Date Pickers Visibility */
+body.vk-theme input,
+body.vk-theme select,
+body.vk-theme textarea {
+    background: #ffffff !important;
+    border: 1px solid #d7d8db !important;
+    color: #444 !important;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+body.vk-theme select {
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234a76a8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E") !important;
+}
+
+/* Stats Date Presets Fix */
+body.vk-theme .stats-period-btn {
+    background: #ffffff;
+    border: 1px solid #d7d8db;
+    color: #2b587a;
+}
+
+body.vk-theme .stats-period-btn.active {
+    background: #5181b8;
+    color: #ffffff;
+    border-color: #4a76a8;
+}
+
+/* Chart Area Contrast Fix */
+body.vk-theme .chart-container {
+    background: #ffffff;
+    border: 1px solid #e7e8ec;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Force Chart Grid/Text visibility (if using Canvas, JS will handle, but CSS can help with backgrounds) */
+body.vk-theme canvas {
+    filter: none !important;
+}
+
+body.vk-theme .search-box {
+    background: #ffffff;
+    border: 1px solid #d7d8db;
+}
+
+body.vk-theme .search-box input {
+    color: #000;
+}
+
+/* Header Buttons Fix */
+body.vk-theme .header-controls .icon-btn {
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    box-shadow: none !important;
+}
+
+body.vk-theme .header-controls .icon-btn:hover {
+    color: #ffffff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Language & Currency Selects in VK Header */
+body.vk-theme .header-controls select {
+    background: transparent !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 0 5px !important;
+    cursor: pointer;
+    background-image: none !important;
+}
+
+body.vk-theme .language-selector select {
+    text-transform: uppercase;
+}
+
+body.vk-theme .currency-selector {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+}
+
+body.vk-theme .balance-amount {
+    color: #000;
+    background: none;
+    -webkit-text-fill-color: #000;
+    text-shadow: none;
+    font-size: 32px;
+}
+
+body.vk-theme .btn-primary {
+    background: #5181b8;
+    color: #ffffff;
+    border-radius: 6px;
+    font-size: 13px;
+    padding: 7px 16px;
+    font-weight: 500;
+    box-shadow: none;
+    clip-path: none !important;
+}
+
+body.vk-theme .btn-primary:hover {
+    background: #5b88bd;
+}
+
+body.vk-theme .badge,
+body.vk-theme #ordersCountBadge {
+    background: #dae1e8 !important;
+    color: #4a76a8 !important;
+    font-weight: normal;
+    box-shadow: none;
+}
+
+body.vk-theme ::-webkit-scrollbar-thumb {
+    background: #dae1e8;
+    border-radius: 10px;
+}
+
+body.vk-theme ::-webkit-scrollbar-track {
+    background: #edeef0;
+}
+
+body.vk-theme .logo {
+    display: none;
+}
+
+/* Inventory & Table Text - DARK AND VISIBLE */
+body.vk-theme .inventory-card,
+body.vk-theme .goal-widget {
+    background: #ffffff;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e7e8ec;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+}
+
+/* Reduce list gap */
+body.vk-theme .orders-list {
+    gap: 8px;
+}
+
+body.vk-theme .inventory-card h4,
+body.vk-theme .inventory-card p,
+body.vk-theme .inventory-card span,
+body.vk-theme .inventory-card td,
+body.vk-theme .inventory-card th,
+body.vk-theme table,
+body.vk-theme table td,
+body.vk-theme table th {
+    color: #000 !important;
+    font-weight: 500;
+}
+
+body.vk-theme th {
+    color: #2b587a !important;
+    font-weight: 600;
+}
+
+/* Action Buttons - Visible on White */
+body.vk-theme .action-btn {
+    background: #f0f2f5 !important;
+    border: 1px solid #d7d8db !important;
+    color: #2b587a !important;
+}
+
+body.vk-theme .action-btn:hover {
+    background: #e4e6eb !important;
+}
+
+body.vk-theme .action-btn.delete-btn {
+    color: #e64646 !important;
+}
+
+
+body.vk-theme.privacy-mode canvas,
+body.vk-theme.privacy-mode .balance-amount,
+body.vk-theme.privacy-mode .stat-card p {
+    filter: blur(8px) !important;
+}
+
+/* VK Theme - Chat UI Overrides */
+body.vk-theme .chat-modal {
+    background: #edeef0;
+    color: #2c2d2e;
+    border-radius: 12px !important;
+}
+
+body.vk-theme .chat-modal .modal-header {
+    background: #ffffff;
+    border-bottom: 1px solid #d7d8db;
+    padding: 12px 20px;
+}
+
+body.vk-theme .chat-modal .header-title h2 {
+    color: #000;
+}
+
+body.vk-theme .chat-modal .close-modal {
+    color: #828282;
+}
+
+body.vk-theme .chat-modal-body {
+    background: #edeef0;
+    padding: 15px;
+}
+
+body.vk-theme .chat-rules-banner {
+    background: #ffffff;
+    border: 1px solid #d7d8db;
+    color: #656565;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+body.vk-theme .chat-rules-banner i {
+    color: #4a76a8;
+}
+
+body.vk-theme .chat-bubble {
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+body.vk-theme .chat-bubble.received {
+    background: #ffffff;
+    color: #000;
+    border: 1px solid #e7e8ec;
+    border-bottom-left-radius: 4px;
+}
+
+body.vk-theme .chat-bubble.sent {
+    background: #eff3f9;
+    color: #000;
+    border: 1px solid #dae2ea;
+    border-bottom-right-radius: 4px;
+}
+
+body.vk-theme .chat-user {
+    color: #2a5885;
+    font-weight: 600;
+    text-transform: none;
+    font-size: 12px;
+}
+
+body.vk-theme .chat-bubble.sent .chat-user {
+    color: #2a5885;
+}
+
+body.vk-theme .chat-time {
+    color: #828282;
+}
+
+body.vk-theme .chat-modal-footer {
+    background: #ffffff;
+    border-top: 1px solid #d7d8db;
+    padding: 15px;
+}
+
+body.vk-theme .chat-input-area input {
+    background: #f2f3f5;
+    color: #000;
+    border: 1px solid #d7d8db;
+    padding: 10px 25px;
+}
+
+body.vk-theme .chat-input-area input:focus {
+    background: #ffffff;
+    border-color: #4a76a8;
+    box-shadow: none;
+}
+
+body.vk-theme .chat-input-area .btn-primary {
+    background: #4a76a8;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+}
+
+body.vk-theme .chat-input-area .btn-primary:hover {
+    background: #5181b8;
+}
+
+body.vk-theme .chat-modal .status-indicator {
+    background: rgba(0, 0, 0, 0.05);
+    color: #656565;
+}
+
+body.vk-theme .chat-modal .status-dot {
+    background: #2ecc71;
+}

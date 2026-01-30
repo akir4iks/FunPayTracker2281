@@ -1,0 +1,188 @@
+/* --- Discord Theme Premium Style --- */
+
+body.discord-theme {
+    /* Discord Palette */
+    --bg-color: #313338;
+    --sidebar-bg: #2b2d31;
+    --card-bg: #2b2d31;
+    --primary-color: #5865F2;
+    /* Blurple */
+    --accent-color: #4752C4;
+    --text-main: #f2f3f5;
+    --text-muted: #b5bac1;
+    --border-color: #1e1f22;
+
+    /* Status Colors */
+    --danger-color: #f04747;
+    --success-color: #23a55a;
+    --warning-color: #f0b232;
+
+    --font-family: 'Inter', sans-serif;
+    --radius-lg: 8px;
+    /* Slightly sharper but still smooth */
+    --radius-md: 4px;
+}
+
+/* Background Pattern */
+body.discord-theme .aurora-bg {
+    filter: none;
+    opacity: 1;
+    background: var(--bg-color);
+}
+
+body.discord-theme .blob {
+    display: none;
+}
+
+body.discord-theme .aurora-bg::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.02) 1px, transparent 0);
+    background-size: 24px 24px;
+    z-index: -1;
+}
+
+/* Sidebar Styling */
+body.discord-theme .sidebar {
+    background-color: var(--sidebar-bg);
+    border-right: none;
+    width: 260px;
+}
+
+body.discord-theme .nav-links li {
+    border-radius: 4px;
+    margin: 2px 8px;
+    padding: 8px 12px;
+}
+
+body.discord-theme .nav-links li:hover:not(.active) {
+    background-color: #35373c;
+    color: #dbdee1;
+}
+
+body.discord-theme .nav-links li.active {
+    background-color: #3f4147;
+    color: white;
+}
+
+body.discord-theme .logo {
+    color: var(--primary-color);
+    padding-left: 8px;
+}
+
+/* Cards & Components */
+body.discord-theme .balance-card,
+body.discord-theme .stat-card,
+body.discord-theme .chart-container,
+body.discord-theme .order-card,
+body.discord-theme .top-list-container,
+body.discord-theme .modal,
+body.discord-theme .inventory-summary-card {
+    background: #2b2d31 !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 8px !important;
+}
+
+body.discord-theme .order-card {
+    background: #2b2d31 !important;
+    margin-bottom: 8px;
+}
+
+body.discord-theme .order-card:hover {
+    background: #2e3035 !important;
+    transform: none;
+}
+
+/* Button Styling */
+body.discord-theme .btn-primary {
+    background: var(--primary-color) !important;
+    border-radius: 3px;
+    transition: background 0.1s ease;
+}
+
+body.discord-theme .btn-primary:hover {
+    background: var(--accent-color) !important;
+}
+
+body.discord-theme .btn-secondary {
+    background: #4e5058;
+    color: white;
+    border: none;
+}
+
+body.discord-theme .btn-secondary:hover {
+    background: #6d6f78;
+}
+
+/* Inputs */
+body.discord-theme input,
+body.discord-theme select,
+body.discord-theme textarea {
+    background: #1e1f22 !important;
+    border: none !important;
+    color: #dbdee1 !important;
+    border-radius: 4px;
+}
+
+body.discord-theme .search-box {
+    background: #1e1f22 !important;
+    border: none !important;
+}
+
+/* Scrollbar */
+body.discord-theme::-webkit-scrollbar {
+    width: 14px;
+}
+
+body.discord-theme::-webkit-scrollbar-thumb {
+    background: #1a1b1e;
+    border: 4px solid transparent;
+    background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    border-radius: 7px;
+}
+
+body.discord-theme::-webkit-scrollbar-track {
+    background: #2b2d31;
+}
+
+/* Specific UI Tweaks */
+body.discord-theme .total_balance {
+    color: var(--text-muted);
+}
+
+body.discord-theme .balance-amount {
+    background: none;
+    -webkit-background-clip: initial;
+    color: white;
+}
+
+body.discord-theme .progress-bar-bg {
+    background: #1e1f22 !important;
+}
+
+body.discord-theme .progress-bar-fill {
+    background: var(--primary-color) !important;
+    box-shadow: none;
+}
+
+body.discord-theme .badge {
+    background: #da373c;
+}
+
+/* Discord Character (Clyde SVG) */
+body.discord-theme .discord-clyde {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    opacity: 0.1;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 127.14 96.36'%3E%3Cpath fill='%23ffffff' d='M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.48,80.21a105.73,105.73,0,0,0,32.44,16.15c2.72-3.69,5.06-7.59,7-11.66a71.69,71.69,0,0,1-11.45-5.42c.94-.68,1.84-1.39,2.69-2.1a78.23,78.23,0,0,0,64.44,0c.84.71,1.74,1.42,2.69,2.1a71.91,71.91,0,0,1-11.41,5.4c1.93,4.07,4.27,7.97,7,11.66a105.09,105.09,0,0,0,32.44-16.15C130,49.94,125.18,26.46,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5.09-12.73,11.4-12.73S54,46,54,53,48.8,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5.09-12.73,11.4-12.73S96,46,96,53,90.89,65.69,84.69,65.69Z'/%3E%3C/svg%3E") no-repeat center;
+}

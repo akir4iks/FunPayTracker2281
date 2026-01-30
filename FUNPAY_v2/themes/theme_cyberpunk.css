@@ -1,0 +1,244 @@
+.cyberpunk-preview {
+    background: #050505;
+    border: 1px solid #fcee0a;
+    color: #fcee0a;
+}
+
+/* Cyberpunk Theme - ULTRA */
+body.cyberpunk-theme {
+    --bg-color: #020205;
+    --sidebar-bg: #050508;
+    --card-bg: #0a0a0f;
+    --primary-color: #fcee0a;
+    --accent-color: #00f3ff;
+    --border-color: #fcee0a;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* CRT Scanlines Overlay */
+body.cyberpunk-theme::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+body.cyberpunk-theme .content {
+    background: transparent !important;
+}
+
+body.cyberpunk-theme .aurora-bg {
+    opacity: 1;
+    background: #020205;
+    z-index: -3;
+    filter: none;
+}
+
+/* Digital Noise / Grain */
+body.cyberpunk-theme .aurora-bg::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.07;
+    pointer-events: none;
+    animation: cyberNoise 0.2s infinite;
+}
+
+@keyframes cyberNoise {
+    0% {
+        transform: translate(0, 0)
+    }
+
+    10% {
+        transform: translate(-1%, -1%)
+    }
+
+    20% {
+        transform: translate(1%, 1%)
+    }
+
+    30% {
+        transform: translate(-2%, 0)
+    }
+
+    40% {
+        transform: translate(2%, 2%)
+    }
+
+    50% {
+        transform: translate(-1%, -2%)
+    }
+
+    60% {
+        transform: translate(2%, 1%)
+    }
+
+    70% {
+        transform: translate(-2%, 1%)
+    }
+
+    80% {
+        transform: translate(1%, -2%)
+    }
+
+    90% {
+        transform: translate(-1%, 1%)
+    }
+
+    100% {
+        transform: translate(1%, -1%)
+    }
+}
+
+body.cyberpunk-theme h1,
+body.cyberpunk-theme h2,
+body.cyberpunk-theme h3 {
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #fcee0a;
+    text-shadow: 0 0 10px rgba(252, 238, 10, 0.5), 3px 0px 0px #ff00ff, -3px 0px 0px #00f3ff;
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 800;
+}
+
+body.cyberpunk-theme .balance-card {
+    border: 2px solid #00f3ff;
+    background: rgba(5, 5, 10, 0.95);
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(0, 243, 255, 0.1);
+    position: relative;
+    padding-top: 45px;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+/* Authentic Tech Corner Accent */
+body.cyberpunk-theme .balance-card::before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    background: #fcee0a;
+    transform: rotate(45deg);
+    z-index: 2;
+    box-shadow: 0 0 15px #fcee0a;
+}
+
+body.cyberpunk-theme .balance-card::after {
+    content: "SYSTEM LOG: ACCESS GRANTED";
+    position: absolute;
+    top: 8px;
+    left: 20px;
+    font-size: 10px;
+    color: #fcee0a;
+    font-family: 'Oxanium', sans-serif;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+body.cyberpunk-theme .balance-amount {
+    color: #fcee0a;
+    -webkit-text-fill-color: #fcee0a;
+    text-shadow: 0 0 20px rgba(252, 238, 10, 0.6);
+    font-family: 'Oxanium', sans-serif;
+    font-weight: 800;
+}
+
+body.cyberpunk-theme .btn-primary {
+    background: #fcee0a;
+    color: #000;
+    font-weight: 900;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 0;
+    clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
+    box-shadow: 4px 4px 0px #ff00ff;
+    position: relative;
+    overflow: hidden;
+}
+
+body.cyberpunk-theme .btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: cyberShine 3s infinite;
+}
+
+@keyframes cyberShine {
+    0% {
+        left: -100%;
+    }
+
+    20% {
+        left: 150%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+body.cyberpunk-theme .order-card,
+body.cyberpunk-theme .stat-card,
+body.cyberpunk-theme .note-card {
+    border: 1px solid rgba(252, 238, 10, 0.2);
+    background: rgba(15, 15, 20, 0.85);
+    border-left: 5px solid #fcee0a;
+    box-shadow: 5px 5px 0px rgba(0, 243, 255, 0.1);
+}
+
+body.cyberpunk-theme .sidebar {
+    border-right: 2px solid #fcee0a;
+    background: #050508;
+    box-shadow: 10px 0 20px rgba(252, 238, 10, 0.05);
+}
+
+body.cyberpunk-theme .sidebar-footer .creator-credit strong {
+    color: #fcee0a;
+    text-shadow: 0 0 8px #fcee0a;
+}
+
+body.cyberpunk-theme .badge,
+body.cyberpunk-theme #ordersCountBadge {
+    background: #fcee0a !important;
+    color: #000 !important;
+    font-weight: bold;
+    box-shadow: 0 0 10px #fcee0a;
+}
+
+/* Refined Rental Styles for Cyberpunk */
+body.cyberpunk-theme .rental-timer {
+    background: #050508 !important;
+    border: 1px solid #fcee0a !important;
+    border-radius: 0 !important;
+    padding: 2px 8px;
+    clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+body.cyberpunk-theme .rental-active {
+    color: #00f3ff !important;
+    text-shadow: 0 0 8px #00f3ff;
+}
+
+body.cyberpunk-theme .rental-expired {
+    color: #fcee0a !important;
+    background: rgba(255, 0, 255, 0.1) !important;
+    text-shadow: 0 0 8px #fcee0a;
+}

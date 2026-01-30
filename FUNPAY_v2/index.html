@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="color-scheme" content="dark">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>FunPay Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="perfect.css">
+    <!-- Themes -->
+    <link rel="stylesheet" href="themes/theme_light.css">
+    <link rel="stylesheet" href="themes/theme_matrix.css">
+    <link rel="stylesheet" href="themes/theme_japanese.css">
+    <link rel="stylesheet" href="themes/theme_cyberpunk.css">
+    <link rel="stylesheet" href="themes/theme_vk.css">
+    <link rel="stylesheet" href="themes/theme_discord.css">
+    <link rel="stylesheet" href="themes/theme_telegram.css">
+    <link rel="stylesheet" href="themes/theme_hub.css">
+    <link rel="stylesheet" href="premium_styles.css">
+    <link rel="stylesheet" href="append_v5.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oxanium:wght@400;700;800&family=Rajdhani:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="aurora-bg">
+        <div class="blob"></div>
+        <div class="blob"></div>
+        <div class="blob"></div>
+    </div>
+    <canvas id="matrixCanvas"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></canvas>
+
+    <!-- Theme Specific Characters -->
+    <div class="theme-character character-kakashi"></div>
+
+    <!-- SVG Filters for Animations -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <filter id="windFilter" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015 0" numOctaves="2" seed="1" result="noise">
+                <animate attributeName="baseFrequency" values="0.015 0; 0.02 0; 0.015 0" dur="8s"
+                    repeatCount="indefinite" />
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-wallet"></i>
+                <span>FP Tracker</span>
+            </div>
+            <ul class="nav-links">
+                <li data-tab="profile" style="display: none;">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span data-i18n="profile">Профиль</span>
+                </li>
+                <li class="active" data-tab="balance">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span data-i18n="balance">Баланс</span>
+                </li>
+                <li data-tab="purchases">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span data-i18n="purchases">Покупки</span>
+                </li>
+                <li data-tab="stats">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span data-i18n="stats">Статистика</span>
+                </li>
+                <li data-tab="piggy">
+                    <i class="fa-solid fa-piggy-bank"></i>
+                    <span data-i18n="piggy_bank">Копилка</span>
+                </li>
+                <li data-tab="calculator">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span data-i18n="calculator">Калькулятор</span>
+                </li>
+                <li data-tab="notes">
+                    <i class="fa-solid fa-note-sticky"></i>
+                    <span data-i18n="notes">Заметки</span>
+                </li>
+                <li data-tab="inventory">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <span data-i18n="inventory">Склад</span>
+                </li>
+                <li data-tab="achievements">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span data-i18n="achievements">Достижения</span>
+                </li>
+                <li data-tab="support">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span data-i18n="support">Поддержка</span>
+                </li>
+            </ul>
+            <div class="sidebar-ads">
+                <a href="https://discord.gg/mzsvQP5KUH" target="_blank" class="ad-link ad-slide active">
+                    <img src="discord_promo.png" alt="Discord Promo" class="ad-banner">
+                </a>
+                <a href="https://t.me/funpaytracker" target="_blank" class="ad-link ad-slide">
+                    <img src="telegram_promo.png" alt="Telegram Promo" class="ad-banner">
+                </a>
+            </div>
+            <div class="sidebar-footer">
+                <div class="creator-credit">
+                    <span data-i18n="created_by">Создано</span> <strong>AKIRA</strong>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Header -->
+            <header>
+                <div class="header-left">
+                    <h1 id="pageTitle" data-i18n="balance">Баланс</h1>
+                </div>
+                <div class="header-controls">
+                    <button class="icon-btn" id="openSettings" title="Настройки">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
+                    <button class="icon-btn" id="togglePrivacy" title="Скрыть суммы">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <div class="language-selector">
+                        <select id="languageSelect" onchange="setLanguage(this.value)"
+                            style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: white; border-radius: 6px; padding: 4px 2px; font-size: 11px; cursor: pointer; width: 44px; text-align: center;">
+                            <option value="ru">RU</option>
+                            <option value="en">EN</option>
+                            <option value="uk">UA</option>
+                        </select>
+                    </div>
+                    <div class="currency-selector">
+                        <span data-i18n="currency">Валюта:</span>
+                        <select id="mainCurrencySelect">
+                            <option value="EUR">EUR (€)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="UAH">UAH (₴)</option>
+                            <option value="RUB">RUB (₽)</option>
+                        </select>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Alerts / Notifications -->
+            <div id="notificationArea"></div>
+
+            <!-- Tab: Profile -->
+            <section id="profile" class="tab-content">
+                <div class="profile-dashboard">
+                    <div class="profile-left">
+                        <div class="profile-card profile-user">
+                            <div class="profile-avatar">
+                                <i class="fa-solid fa-user-ninja"></i>
+                            </div>
+                            <div class="profile-info">
+                                <div class="nickname-wrapper">
+                                    <h2 id="profileNickname">Trader</h2>
+                                    <button class="edit-btn" onclick="openNicknameModal()" title="Edit Name">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </div>
+                                <div class="profile-rank-info">
+                                    <span id="profileRankName" class="rank-badge">Новичок</span>
+                                    <span class="profile-xp-total"><span id="profileTotalXp"
+                                            style="color: var(--primary-color);">0</span> XP</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-card profile-rank-progress">
+                            <div class="ach-xp-bar-container">
+                                <div id="profileXpBar" class="ach-xp-bar" style="width: 0%"></div>
+                            </div>
+                            <div class="rank-next-info">
+                                <span data-i18n="next_rank">Следующий ранг</span>: <span id="profileNextRankName"
+                                    style="color: var(--text-main);">...</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-stats-grid">
+                            <div class="stat-card mini">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                                <div class="stat-details">
+                                    <span class="stat-label" data-i18n="revenue">Выручка</span>
+                                    <span id="profileTotalRevenue" class="stat-value">0 €</span>
+                                </div>
+                            </div>
+                            <div class="stat-card mini">
+                                <i class="fa-solid fa-check-double"></i>
+                                <div class="stat-details">
+                                    <span class="stat-label" data-i18n="orders_count">Заказов</span>
+                                    <span id="profileTotalOrders" class="stat-value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-right">
+                        <div class="profile-card news-section">
+                            <div class="card-header">
+                                <i class="fa-solid fa-newspaper"></i>
+                                <h3 data-i18n="news_title">Новости и обновления</h3>
+                            </div>
+                            <div id="newsList" class="news-list">
+                                <!-- News injected via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Balance -->
+            <section id="balance" class="tab-content active show">
+                <div class="balance-card">
+                    <p class="balance-label" data-i18n="total_balance">Текущий баланс</p>
+                    <h2 class="balance-amount glow-text" id="totalBalance">0.00 €</h2>
+                    <p class="balance-updated" id="lastUpdated"><span data-i18n="updated">Обновлено</span>: <span
+                            data-i18n="never">никогда</span></p>
+
+                    <!-- Goal Widget -->
+                    <div class="goal-widget" title="Нажмите, чтобы изменить цель">
+                        <div class="goal-header">
+                            <span><span data-i18n="monthly_goal">Цель на месяц</span>: <span id="goalTarget">0 €</span>
+                                <i class="fa-solid fa-pen" style="font-size: 10px; opacity: 0.5;"></i></span>
+                            <span id="goalPercent">0%</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="goalBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-primary" id="addOrderBtn" data-i18n="add_order">
+                        <i class="fa-solid fa-plus"></i> Добавить заказ
+                    </button>
+                    <!-- Stock Quick Actions -->
+                    <div style="display:flex; flex-direction:column; gap:5px; margin-left:20px;">
+                        <small style="color:var(--text-muted)" data-i18n="quick_sell">Быстрая продажа со склада:</small>
+                        <div class="templates-list" id="stockQuickActions">
+                            <!-- Stock items injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Templates (Traditional) -->
+                <div class="templates-list" id="quickTemplates" style="margin-bottom: 20px;">
+                    <button class="template-chip add-tpl" id="addTemplateBtn"
+                        title="Создать шаблон (ПКМ по чипу для удаления)">+</button>
+                </div>
+
+                <div class="search-filter-container" style="margin-bottom: 20px;">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchInput" placeholder="Поиск...">
+                    </div>
+                    <select id="filterCategory">
+                        <option value="all" data-i18n="all_categories"><i class="fa-solid fa-folder"></i> Все категории
+                        </option>
+                        <option value="access" data-i18n="cat_access"><i class="fa-solid fa-user-lock"></i> Аккаунты
+                        </option>
+                        <option value="gold" data-i18n="cat_gold"><i class="fa-solid fa-coins"></i> Игровая валюта
+                        </option>
+                        <option value="boost" data-i18n="cat_boost"><i class="fa-solid fa-rocket"></i> Бустинг</option>
+                        <option value="service" data-i18n="cat_service"><i class="fa-solid fa-bell-concierge"></i>
+                            Услуги</option>
+                        <option value="rent" data-i18n="cat_rent"><i class="fa-solid fa-key"></i> Аренда</option>
+                        <option value="items" data-i18n="cat_items"><i class="fa-solid fa-box-open"></i> Предметы
+                        </option>
+                        <option value="other" data-i18n="cat_other"><i class="fa-solid fa-ellipsis"></i> Прочее</option>
+                    </select>
+                    <select id="filterStatus">
+                        <option value="all" data-i18n="all_statuses"><i class="fa-solid fa-list-check"></i> Все статусы
+                        </option>
+                        <option value="waiting" data-i18n="waiting"><i class="fa-solid fa-clock"></i> Ожидание</option>
+                        <option value="paid" data-i18n="paid"><i class="fa-solid fa-check-double"></i> Оплачено</option>
+                        <option value="active" data-i18n="active"><i class="fa-solid fa-circle-play"></i> Активно
+                        </option>
+                        <option value="expired" data-i18n="expired"><i class="fa-solid fa-circle-exclamation"></i>
+                            Истекло</option>
+                    </select>
+                    <select id="sortOrders">
+                        <option value="date_desc" data-i18n="sort_date_desc">📅 Сначала новые</option>
+                        <option value="date_asc" data-i18n="sort_date_asc">📅 Сначала старые</option>
+                        <option value="time_asc" data-i18n="sort_time_asc">⏳ Заканчиваются скоро</option>
+                        <option value="time_desc" data-i18n="sort_time_desc">⏳ Заканчиваются позже</option>
+                    </select>
+                    <button class="icon-btn" id="openHistoryBtn" title="История действий"
+                        style="width: auto; padding: 0 15px; gap: 8px;">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span data-i18n="recent_history">История</span>
+                    </button>
+                </div>
+
+                <div class="recent-orders">
+                    <h3><span data-i18n="history">История заказов</span> <span id="ordersCountBadge"
+                            class="badge">0</span></h3>
+                    <div class="orders-list" id="ordersList">
+                        <!-- Order items injected here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Purchases -->
+            <section id="purchases" class="tab-content">
+                <div class="stats-controls">
+                    <h2 data-i18n="purchases">Мои расходы</h2>
+                    <button class="btn-danger" id="addExpenseBtn" data-i18n="add_expense">
+                        <i class="fa-solid fa-minus"></i> Добавить расход
+                    </button>
+                </div>
+
+                <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-bottom:20px;">
+                    <div class="stat-card">
+                        <h3 data-i18n="total_expenses">Всего расходов</h3>
+                        <p id="totalExpensesDisplay" style="color:var(--danger-color)">0.00 €</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 data-i18n="net_profit">Чистая прибыль</h3>
+                        <p id="netProfitDisplay" style="color:var(--success-color)">0.00 €</p>
+                    </div>
+                </div>
+
+                <div class="recent-orders">
+                    <h3 data-i18n="exp_history">История покупок</h3>
+                    <div class="orders-list" id="expensesList">
+                        <!-- Expenses injected here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Stats -->
+            <section id="stats" class="tab-content">
+                <!-- Date Range Picker -->
+                <div class="stats-controls">
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <div class="date-presets">
+                            <button class="preset-btn" data-range="today" data-i18n="preset_today">Сегодня</button>
+                            <button class="preset-btn" data-range="yesterday"
+                                data-i18n="preset_yesterday">Вчера</button>
+                            <button class="preset-btn active" data-range="7" data-i18n="preset_7_days">7 дней</button>
+                            <button class="preset-btn" data-range="30" data-i18n="preset_30_days">30 дней</button>
+                            <button class="preset-btn" data-range="all" data-i18n="preset_all_time">Всё время</button>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <select id="comparePeriod"
+                                style="background:#2C2F36; border-radius:4px; padding:5px; font-size:12px;">
+                                <option value="prev_period" data-i18n="compare_prev">Сравнить: пред. период</option>
+                                <option value="day" data-i18n="compare_day">Сравнить: вчера</option>
+                                <option value="week" data-i18n="compare_week">Сравнить: прошл. неделю</option>
+                                <option value="month" data-i18n="compare_month">Сравнить: прошл. месяц</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="custom-date">
+                        <input type="date" id="dateStart">
+                        <span>—</span>
+                        <input type="date" id="dateEnd">
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <h3 data-i18n="revenue">Выручка</h3>
+                            <span id="revenueBadge" class="growth-badge" style="display:none">+0%</span>
+                        </div>
+                        <p id="statRevenue">0</p>
+                        <small id="revenueDiff"
+                            style="color:var(--text-muted); font-size:12px; display:block; margin-top:5px;">...</small>
+                    </div>
+                    <div class="stat-card">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <h3 data-i18n="orders_count">Заказов</h3>
+                            <span id="countBadge" class="growth-badge" style="display:none">+0%</span>
+                        </div>
+                        <p id="statCount">0</p>
+                        <small id="countDiff"
+                            style="color:var(--text-muted); font-size:12px; display:block; margin-top:5px;">...</small>
+                    </div>
+                    <div class="stat-card">
+                        <h3 data-i18n="avg_check">Ср. чек</h3>
+                        <p id="statAvg">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 data-i18n="forecast">Прогноз (мес)</h3>
+                        <p id="statForecast">0</p>
+                    </div>
+                </div>
+
+                <!-- Main Charts -->
+                <div class="charts-row">
+                    <div class="chart-container main-chart">
+                        <h3 data-i18n="revenue_dynamic">Динамика выручки</h3>
+                        <div class="canvas-wrapper">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-container pie-chart">
+                        <h3 data-i18n="category_shares">Доли категорий</h3>
+                        <div class="donut-chart-wrapper">
+                            <div class="donut-chart" id="categoryChart"></div>
+                            <div class="chart-legend" id="categoryLegend"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Secondary Stats -->
+                <div class="charts-row" style="margin-top: 20px;">
+                    <div class="chart-container full-width">
+                        <div class="calendar-header"
+                            style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                            <h3 data-i18n="activity" style="margin: 0;">Активность (Календарь)</h3>
+                            <div class="calendar-nav" style="display: flex; align-items: center; gap: 15px;">
+                                <button class="icon-btn sm" onclick="changeHeatmapMonth(-1)" title="Prev">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                </button>
+                                <span id="currentHeatmapMonth"
+                                    style="font-weight: 700; color: var(--text-main); font-size: 14px; min-width: 120px; text-align: center;">...</span>
+                                <button class="icon-btn sm" onclick="changeHeatmapMonth(1)" title="Next">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="calendar-heatmap" id="calendarHeatmap"></div>
+                    </div>
+                </div>
+
+                <div class="top-list-container" style="margin-top: 20px;">
+                    <div class="chart-container">
+                        <h3 data-i18n="top_products">Топ товаров по прибыли</h3>
+                        <div id="topProductsList" class="top-list">
+                            <!-- JS Inject -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Calculator -->
+            <section id="calculator" class="tab-content">
+                <div class="calc-converter-container">
+                    <div class="converter-box">
+                        <h3 data-i18n="currency_converter">Конвертер валют</h3>
+                        <div class="input-group">
+                            <input type="number" id="calcAmount" placeholder="Сумма" value="1">
+                            <select id="calcCurrency">
+                                <option value="EUR">EUR</option>
+                                <option value="USD">USD</option>
+                                <option value="UAH">UAH</option>
+                                <option value="RUB">RUB</option>
+                            </select>
+                        </div>
+                        <div class="results-list" id="calcResults">
+                            <!-- Conversion results -->
+                        </div>
+                    </div>
+
+                    <div class="simple-calculator">
+                        <h3 data-i18n="calculator">Калькулятор</h3>
+                        <div class="calc-display" id="simpleCalcDisplay">0</div>
+                        <div class="calc-buttons">
+                            <button class="calc-btn clear">C</button>
+                            <button class="calc-btn op">÷</button>
+                            <button class="calc-btn op">×</button>
+                            <button class="calc-btn del">⌫</button>
+                            <button class="calc-btn num">7</button>
+                            <button class="calc-btn num">8</button>
+                            <button class="calc-btn num">9</button>
+                            <button class="calc-btn op">−</button>
+                            <button class="calc-btn num">4</button>
+                            <button class="calc-btn num">5</button>
+                            <button class="calc-btn num">6</button>
+                            <button class="calc-btn op">+</button>
+                            <button class="calc-btn num">1</button>
+                            <button class="calc-btn num">2</button>
+                            <button class="calc-btn num">3</button>
+                            <button class="calc-btn eq">=</button>
+                            <button class="calc-btn num zero">0</button>
+                            <button class="calc-btn num">.</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Inventory -->
+            <section id="inventory" class="tab-content">
+                <div class="stats-controls">
+                    <h2 data-i18n="warehouse">Склад товаров</h2>
+                    <button class="btn-primary" id="addInventoryBtn" data-i18n="add_product"><i
+                            class="fa-solid fa-plus"></i> Добавить
+                        товар</button>
+                </div>
+
+                <div class="inventory-container">
+                    <table class="inventory-table">
+                        <thead>
+                            <tr>
+                                <th data-i18n="product_name">Название</th>
+                                <th data-i18n="unit">Ед.</th>
+                                <th data-i18n="quantity">Кол-во</th>
+                                <th data-i18n="price_per_unit">Цена/ед</th>
+                                <th data-i18n="total">Всего</th>
+                                <th data-i18n="actions">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryList">
+                            <!-- JS Rendered -->
+                        </tbody>
+                    </table>
+                    <div class="inventory-summary-card">
+                        <div id="inventoryTotal" class="inventory-total-value">Общая стоимость: 0 ₽</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Achievements -->
+            <section id="achievements" class="tab-content">
+                <div id="achievementsList" class="achievements-container">
+                    <!-- JS Rendered -->
+                </div>
+            </section>
+
+            <!-- Tab: Notes -->
+            <section id="notes" class="tab-content">
+                <div class="notes-input-area">
+                    <textarea id="noteInput" data-i18n="note_placeholder" placeholder="Напишите заметку..."
+                        maxlength="150"></textarea>
+                    <button class="btn-primary" id="addNoteBtn" data-i18n="save_note">Сохранить</button>
+                </div>
+                <div class="notes-list" id="notesList">
+                    <!-- Notes injected here -->
+                </div>
+            </section>
+
+            <!-- Tab: Piggy Bank -->
+            <section id="piggy" class="tab-content">
+                <div class="stats-controls">
+                    <h2 data-i18n="piggy_bank">Копилка</h2>
+                    <button class="btn-primary" id="addPiggyBtn">
+                        <i class="fa-solid fa-plus"></i> <span data-i18n="add_piggy">Добавить копилку</span>
+                    </button>
+                </div>
+
+                <div class="piggy-grid" id="piggyBanksList">
+                    <!-- Piggy banks injected here -->
+                </div>
+            </section>
+
+            <!-- Tab: Support -->
+            <section id="support" class="tab-content">
+                <div class="support-container">
+                    <div class="support-header">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <h2 data-i18n="faq_title">Часто задаваемые вопросы</h2>
+                    </div>
+
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span data-i18n="q1">Где хранятся мои данные?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-i18n="a1">Все ваши данные хранятся локально в вашем браузере (LocalStorage). Мы
+                                    не передаем их на сторонние серверы, если вы не используете функцию синхронизации.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span data-i18n="q2">Как работает синхронизация?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-i18n="a2">Синхронизация позволяет перенести ваши данные на другое устройство по
+                                    уникальному коду. Будьте осторожны: не передавайте этот код посторонним!</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span data-i18n="q3">Как изменить валюту?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-i18n="a3">Вы можете выбрать основную валюту отображения в шапке сайта. Все суммы
+                                    будут автоматически пересчитаны по актуальному курсу.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span data-i18n="q4">Безопасно ли это?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-i18n="a4">Приложение работает как PWA (Progressive Web App) и полностью
+                                    автономно. Конфиденциальность ваших финансов — наш приоритет.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span data-i18n="q5">Для чего предназначен этот сайт?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-i18n="a5">Это специализированный инструмент для трейдеров FunPay. Он помогает
+                                    вести учет продаж, отслеживать чистую прибыль, управлять складом товаров и
+                                    анализировать статистику за разные периоды.</p>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <div class="faq-question">
+                                <span data-i18n="q6">Как работает копилка?</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p data-i18n="a6">Копилка автоматически откладывает процент с продаж. Можно задать общий
+                                    % или настроить его для каждой категории отдельно. Деньги вычитаются из чистой
+                                    прибыли. При заполнении на 100% отчисления прекращаются. Если удалить копилку,
+                                    деньги вернутся на баланс.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="support-ticket-section">
+                        <div class="support-header">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <h2 data-i18n="support_ticket_title">Письмо поддержке</h2>
+                        </div>
+                        <form id="supportForm" class="support-form">
+                            <div class="form-group">
+                                <label data-i18n="ticket_subject_label">Тема обращения</label>
+                                <input type="text" id="ticketSubject" data-i18n="ticket_subject_label" required>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="ticket_message_label">Сообщение</label>
+                                <textarea id="ticketMessage" data-i18n="ticket_message_label" rows="4"
+                                    required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary" data-i18n="send_request_btn"
+                                style="width: 100%">Отправить запрос</button>
+                        </form>
+                    </div>
+
+                    <div class="support-socials">
+                        <div class="support-header">
+                            <i class="fa-solid fa-share-nodes"></i>
+                            <h2 data-i18n="our_socials">Наши соц.сети</h2>
+                        </div>
+                        <div class="social-links-grid">
+                            <a href="https://t.me/funpaytracker" target="_blank" class="social-card tg">
+                                <div class="social-icon">
+                                    <i class="fa-brands fa-telegram"></i>
+                                </div>
+                                <div class="social-info">
+                                    <span class="social-name">Telegram</span>
+                                    <span class="social-desc">Официальный канал</span>
+                                </div>
+                            </a>
+                            <a href="https://youtube.com/@funpaytracker" target="_blank" class="social-card yt">
+                                <div class="social-icon">
+                                    <i class="fa-brands fa-youtube"></i>
+                                </div>
+                                <div class="social-info">
+                                    <span class="social-name">YouTube</span>
+                                    <span class="social-desc">Скоро...</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="support-footer">
+                        <p data-i18n="support_contact">По вопросам и предложениям обращайтесь к разработчику.</p>
+                        <div class="social-links">
+                            <a href="https://t.me/AYDAR_UA" target="_blank" class="social-btn tg" title="Telegram">
+                                <i class="fa-brands fa-telegram"></i>
+                            </a>
+                            <a href="https://discord.com/users/695312119700127804" target="_blank" class="social-btn ds"
+                                title="Discord">
+                                <i class="fa-brands fa-discord"></i>
+                            </a>
+                        </div>
+                        <div class="creator-badge">
+                            <span data-i18n="created_by">Сайт создан</span> <strong>AKIRA</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="piggyModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="piggyModalTitle">Новая копилка</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="piggyEditId">
+                <div class="form-group">
+                    <label data-i18n="piggy_name">Название / Цель</label>
+                    <input type="text" id="piggyName" placeholder="Например: На новый ПК">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="piggy_percentage">Общий процент (%)</label>
+                    <input type="number" id="piggyPercent" placeholder="0" min="0" max="100">
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="piggy_category_rates">Проценты по категориям</label>
+                    <div id="piggyCategoryList" class="piggy-modal-cat-list">
+                        <!-- Categories injected via JS -->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="piggy_goal">Целевая сумма (0 = без цели)</label>
+                    <div class="amount-row">
+                        <input type="number" id="piggyGoal" placeholder="0.00">
+                        <select id="piggyCurrency">
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="UAH">UAH</option>
+                            <option value="RUB">RUB</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="piggyTransferBtn" style="display:none; margin-right: auto;">
+                    <i class="fa-solid fa-right-left"></i> <span data-i18n="transfer_funds">Перевод</span>
+                </button>
+                <button class="btn-secondary close-modal" data-i18n="cancel">Отмена</button>
+                <button class="btn-primary" onclick="savePiggyBank()" data-i18n="save">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Piggy Transfer Modal -->
+    <div class="modal-overlay" id="piggyTransferModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="transfer_funds">Перевод средств</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="piggyTransferSourceId">
+
+                <div class="transfer-source-info" id="piggyTransferSourceDisplay"
+                    style="margin-bottom: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px;">
+                    <!-- Source bank info injected via JS -->
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="target_bank">Копилка-получатель</label>
+                    <select id="piggyTransferTargetId" class="custom-select-minimal" data-placeholder="...">
+                        <!-- Options injected via JS -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label data-i18n="amount">Сумма</label>
+                    <input type="number" id="piggyTransferAmount" placeholder="0.00" step="0.01">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary close-modal" data-i18n="cancel">Отмена</button>
+                <button class="btn-primary" onclick="executePiggyTransfer()"
+                    data-i18n="confirm_transfer">Перевести</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Name Edit Modal -->
+    <div class="modal-overlay" id="nicknameModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="nickname">Имя пользователя</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label data-i18n="nickname">Имя пользователя</label>
+                    <input type="text" id="editNickname" placeholder="Trader">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary close-modal" data-i18n="cancel">Отмена</button>
+                <button class="btn-primary" onclick="saveNickname()" data-i18n="save">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="new_order">Новый заказ</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="orderEditId">
+                <div class="form-group">
+                    <label data-i18n="order_title">Название заказа</label>
+                    <input type="text" id="orderTitle" data-i18n="order_title" placeholder="Например: Продажа голды">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="all_categories">Категория</label>
+                    <select id="orderCategory">
+                        <option value="gold"><i class="fa-solid fa-coins"></i> Игровая валюта</option>
+                        <option value="access"><i class="fa-solid fa-user-lock"></i> Аккаунты</option>
+                        <option value="boost"><i class="fa-solid fa-rocket"></i> Бустинг</option>
+                        <option value="service"><i class="fa-solid fa-bell-concierge"></i> Услуги</option>
+                        <option value="rent"><i class="fa-solid fa-key"></i> Аренда</option>
+                        <option value="items"><i class="fa-solid fa-box-open"></i> Предметы</option>
+                        <option value="other"><i class="fa-solid fa-ellipsis"></i> Прочее</option>
+                    </select>
+                </div>
+                <div class="form-group" id="rentalFields" style="display: none;">
+                    <label data-i18n="rental_duration">Длительность аренды</label>
+                    <div class="amount-row">
+                        <input type="number" id="rentalDuration" placeholder="Длительность">
+                        <select id="rentalUnit">
+                            <option value="minutes" data-i18n="minutes">Минуты</option>
+                            <option value="hours" data-i18n="hours">Часы</option>
+                            <option value="days" data-i18n="days">Дни</option>
+                            <option value="months" data-i18n="months">Месяцы</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="amount">Сумма</label>
+                    <div class="amount-row">
+                        <input type="number" id="orderAmount" placeholder="0.00">
+                        <select id="orderCurrency">
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="UAH">UAH</option>
+                            <option value="RUB">RUB</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" style="display: flex; gap: 10px;">
+                    <div style="flex: 1.5;">
+                        <label data-i18n="date">Дата</label>
+                        <input type="date" id="orderDate">
+                    </div>
+                    <div style="flex: 1;">
+                        <label data-i18n="time">Время</label>
+                        <input type="time" id="orderTime">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="order_number">Номер заказа (#)</label>
+                    <input type="text" id="orderNumber" placeholder="Например: #ABCD123">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary close-modal" data-i18n="cancel">Отмена</button>
+                <button class="btn-primary" id="saveOrderBtn" data-i18n="save">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="expenseModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="new_expense">Новый расход</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label data-i18n="expense_target">На что потрачено?</label>
+                    <input type="text" id="expenseTitle" data-i18n="expense_target"
+                        placeholder="Например: Реклама, Вывод...">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="amount">Сумма</label>
+                    <div class="amount-row">
+                        <input type="number" id="expenseAmount" placeholder="0.00">
+                        <select id="expenseCurrency">
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="UAH">UAH</option>
+                            <option value="RUB">RUB</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="date">Дата</label>
+                    <input type="date" id="expenseDate">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary close-modal" data-i18n="cancel">Отмена</button>
+                <button class="btn-danger" id="saveExpenseBtn" data-i18n="add_expense">Списать</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal settings-modal-redesign">
+            <div class="modal-header">
+                <div class="header-with-icon">
+                    <i class="fa-solid fa-gear"></i>
+                    <h2 data-i18n="settings">Настройки</h2>
+                </div>
+                <button class="close-modal" onclick="closeModal('settingsModal')">&times;</button>
+            </div>
+            <div class="settings-container">
+                <aside class="settings-sidebar">
+                    <div class="settings-nav-item active" data-settings-tab="appearance">
+                        <i class="fa-solid fa-palette"></i>
+                        <span data-i18n="appearance_title">Внешний вид</span>
+                    </div>
+                    <div class="settings-nav-item" data-settings-tab="general">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span data-i18n="general_title">Общие</span>
+                    </div>
+                    <div class="settings-nav-item" data-settings-tab="data">
+                        <i class="fa-solid fa-database"></i>
+                        <span data-i18n="data_title">Данные</span>
+                    </div>
+                </aside>
+                <div class="settings-content">
+                    <!-- Appearance Tab -->
+                    <div class="settings-tab-pane active" id="settings-appearance">
+                        <div class="appearance-layout">
+                            <div class="appearance-controls">
+                                <div class="settings-section">
+                                    <div class="section-title">
+                                        <i class="fa-solid fa-palette"></i>
+                                        <span data-i18n="theme_color">Цвет темы</span>
+                                    </div>
+                                    <div class="theme-grid redesigned-theme-picker">
+                                        <!-- Basic Colors -->
+                                        <div class="theme-card theme-option" data-color="#7289da">
+                                            <div class="theme-preview" style="background: #7289da;"></div>
+                                            <span data-i18n="theme_indigo">Индиго</span>
+                                        </div>
+                                        <div class="theme-card theme-option" data-color="#9b59b6">
+                                            <div class="theme-preview" style="background: #9b59b6;"></div>
+                                            <span data-i18n="theme_purple">Фиолетовый</span>
+                                        </div>
+                                        <div class="theme-card theme-option" data-color="#2ecc71">
+                                            <div class="theme-preview" style="background: #2ecc71;"></div>
+                                            <span data-i18n="theme_green">Зеленый</span>
+                                        </div>
+                                        <div class="theme-card theme-option" data-color="#e67e22">
+                                            <div class="theme-preview" style="background: #e67e22;"></div>
+                                            <span data-i18n="theme_orange">Оранжевый</span>
+                                        </div>
+                                        <div class="theme-card theme-option" data-color="#ff4d4d">
+                                            <div class="theme-preview" style="background: #ff4d4d;"></div>
+                                            <span data-i18n="theme_red">Красный</span>
+                                        </div>
+                                        <!-- Special Themes -->
+                                        <div class="theme-card theme-option special-theme" data-color="cyberpunk">
+                                            <div class="theme-preview cyberpunk-preview"><i
+                                                    class="fa-solid fa-bolt"></i></div>
+                                            <span data-i18n="theme_cyberpunk">2077</span>
+                                        </div>
+                                        <div class="theme-card theme-option special-theme" data-color="matrix">
+                                            <div class="theme-preview matrix-preview">101</div>
+                                            <span data-i18n="theme_matrix">Matrix</span>
+                                        </div>
+                                        <div class="theme-card theme-option special-theme" data-color="japanese">
+                                            <div class="theme-preview japanese-preview">🌸</div>
+                                            <span data-i18n="theme_japanese">Sakura</span>
+                                        </div>
+                                        <div class="theme-card theme-option special-theme" data-color="vk">
+                                            <div class="theme-preview vk-preview">VK</div>
+                                            <span data-i18n="theme_vk">VK</span>
+                                        </div>
+                                        <div class="theme-card theme-option special-theme" data-color="discord">
+                                            <div class="theme-preview" style="background: #5865F2; color: white;"><i
+                                                    class="fa-brands fa-discord"></i></div>
+                                            <span data-i18n="theme_discord">Discord</span>
+                                        </div>
+                                        <div class="theme-card theme-option special-theme" data-color="telegram">
+                                            <div class="theme-preview" style="background: #2481cc; color: white;"><i
+                                                    class="fa-brands fa-telegram"></i></div>
+                                            <span data-i18n="theme_telegram">Telegram</span>
+                                        </div>
+                                        <div class="theme-card theme-option special-theme" data-color="hub">
+                                            <div class="theme-preview"
+                                                style="background: #000; color: #ff9900; font-weight: 800;">HUB</div>
+                                            <span data-i18n="theme_hub">Hub</span>
+                                        </div>
+                                        <div class="theme-card theme-option special-theme premium-theme-card"
+                                            data-color="gold-gradient">
+                                            <div class="theme-preview"
+                                                style="background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);">
+                                            </div>
+                                            <span data-i18n="theme_gold">Золотой</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="settings-section">
+                                    <div class="section-title">
+                                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                        <span data-i18n="effects">Эффекты</span>
+                                    </div>
+                                    <div class="toggle-item">
+                                        <label data-i18n="effects">Эффекты (Праздничные)</label>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="effectsToggle">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- General Tab -->
+                    <div class="settings-tab-pane" id="settings-general">
+                        <div class="settings-section">
+                            <div class="section-title">
+                                <i class="fa-solid fa-bullseye"></i>
+                                <span data-i18n="monthly_goal">Цель на месяц</span>
+                            </div>
+                            <div class="form-group">
+                                <div class="amount-row">
+                                    <input type="number" id="settingsGoal" placeholder="Сумма"
+                                        oninput="updateStateValue('goal', this.value)">
+                                    <select id="settingsGoalCurrency"
+                                        onchange="updateStateValue('goalCurrency', this.value)">
+                                        <option value="EUR">EUR</option>
+                                        <option value="USD">USD</option>
+                                        <option value="UAH">UAH</option>
+                                        <option value="RUB">RUB</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <div class="section-title">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span data-i18n="sounds">Звуки</span>
+                            </div>
+                            <div class="toggle-item">
+                                <span></span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="soundToggle"
+                                        onchange="updateStateValue('soundEnabled', this.checked)">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <div class="section-title">
+                                <i class="fa-solid fa-money-bill-transfer"></i>
+                                <span data-i18n="currency_rates">Курсы валют (1 EUR)</span>
+                            </div>
+                            <div class="rates-display-grid" id="settingsRates">
+                                <!-- Rates injected here -->
+                            </div>
+                            <button class="btn-primary update-rates-btn-new" onclick="manualUpdateRates()">
+                                <i class="fa-solid fa-rotate"></i>
+                                <span data-i18n="update_rates_btn">Обновить курсы</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Data Tab -->
+                    <div class="settings-tab-pane" id="settings-data">
+                        <div class="settings-section">
+                            <div class="section-title">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span data-i18n="backup_title">Резервное копирование</span>
+                            </div>
+                            <div class="data-actions-grid">
+                                <button class="data-btn export" onclick="exportState()">
+                                    <i class="fa-solid fa-download"></i>
+                                    <div>
+                                        <div class="btn-label" data-i18n="export">Экспорт</div>
+                                        <div class="btn-sub">Сохранить всё в .fpt</div>
+                                    </div>
+                                </button>
+                                <button class="data-btn import" onclick="document.getElementById('importFile').click()">
+                                    <i class="fa-solid fa-upload"></i>
+                                    <div>
+                                        <div class="btn-label" data-i18n="import">Импорт</div>
+                                        <div class="btn-sub">Загрузить из файла</div>
+                                    </div>
+                                </button>
+                                <input type="file" id="importFile" accept=".json,.fpt" class="hidden"
+                                    onchange="importState(event)">
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <div class="section-title">
+                                <i class="fa-solid fa-sync"></i>
+                                <span data-i18n="sync">Синхронизация</span>
+                            </div>
+                            <button class="btn-secondary sync-btn-new" onclick="promptSync()">
+                                <i class="fa-solid fa-key"></i>
+                                <span data-i18n="sync_by_code">Синхронизация по коду</span>
+                            </button>
+                        </div>
+                        <div class="settings-section danger-zone">
+                            <div class="section-title">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                <span data-i18n="reset">Опасная зона</span>
+                            </div>
+                            <button class="btn-danger-minimal" onclick="resetAllData()">
+                                <i class="fa-solid fa-trash-can"></i>
+                                <span data-i18n="reset_all">Сбросить все данные приложения</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Note Modal (for editing) -->
+    <div class="modal-overlay" id="noteModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="edit">Редактировать заметку</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editNoteId">
+                <div class="form-group">
+                    <textarea id="editNoteText" rows="4" data-i18n="notes" maxlength="150"
+                        style="width:100%; padding:10px; border-radius:5px; background:var(--bg-secondary); border:1px solid var(--border-color); color:white;"></textarea>
+                </div>
+                <button class="btn-primary" id="saveNoteBtn" style="width:100%" data-i18n="save">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Modal -->
+    <div class="modal-overlay" id="inventoryModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="invModalTitle" data-i18n="add_product">Добавить товар</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="invEditId">
+                <div class="form-group">
+                    <label data-i18n="product_name">Название</label>
+                    <input type="text" id="invName" data-i18n="product_name" placeholder="Название товара">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="unit">Ед. изм.</label>
+                    <input type="text" id="invUnit" value="шт">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="price_per_unit">Цена за ед.</label>
+                    <input type="number" id="invPrice" value="0">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="quantity">Количество</label>
+                    <input type="number" id="invQty" value="0">
+                </div>
+                <button class="btn-primary" id="saveInventoryBtn" style="width:100%" data-i18n="save">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="templateModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="tplModalTitle" data-i18n="new_tpl">Новый шаблон</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="tplEditId">
+                <div class="form-group">
+                    <label data-i18n="tpl_name">Название (на чипе)</label>
+                    <input type="text" id="tplTitle" data-i18n="tpl_name_placeholder"
+                        placeholder="Например: Голда 1000">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="cat">Категория</label>
+                    <select id="tplCategory">
+                        <option value="gold" data-i18n="cat_gold">💰 Игровая валюта</option>
+                        <option value="access" data-i18n="cat_access">👤 Аккаунты</option>
+                        <option value="boost" data-i18n="cat_boost">🚀 Бустинг</option>
+                        <option value="service" data-i18n="cat_service">🔧 Услуги</option>
+                        <option value="rent" data-i18n="cat_rent">🔑 Аренда</option>
+                        <option value="other" data-i18n="cat_other">📦 Прочее</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label data-i18n="amount_currency">Сумма и Валюта</label>
+                    <div class="amount-row">
+                        <input type="number" id="tplAmount" placeholder="0.00">
+                        <select id="tplCurrency">
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                            <option value="UAH">UAH</option>
+                            <option value="RUB">RUB</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary close-modal" data-i18n="cancel">Отмена</button>
+                <button class="btn-primary" id="saveTemplateBtn" data-i18n="save">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Alert/Confirm Modals -->
+    <div class="modal-overlay" id="customConfirmModal">
+        <div class="modal" style="max-width: 350px; text-align: center;">
+            <div class="modal-header" style="justify-content: center; margin-bottom: 10px;">
+                <h2 id="confirmTitle" style="font-size: 18px;" data-i18n="confirm">Подтверждение</h2>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage" style="color: var(--text-muted); margin-bottom: 25px;">Вы уверены?</p>
+                <div class="modal-footer" style="justify-content: center; gap: 15px;">
+                    <button class="btn-secondary" id="confirmCancelBtn" style="min-width: 100px;"
+                        data-i18n="no">Нет</button>
+                    <button class="btn-primary" id="confirmOkBtn" style="min-width: 100px;" data-i18n="yes">Да</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="customAlertModal">
+        <div class="modal" style="max-width: 350px; text-align: center;">
+            <div class="modal-header" style="justify-content: center; margin-bottom: 10px;">
+                <h2 id="alertTitle" style="font-size: 18px;" data-i18n="attention">Внимание</h2>
+            </div>
+            <div class="modal-body">
+                <p id="alertMessage" style="color: var(--text-muted); margin-bottom: 25px; white-space: pre-wrap;">...
+                </p>
+                <div class="modal-footer" style="justify-content: center;">
+                    <button class="btn-primary" id="alertOkBtn" style="min-width: 100px;" data-i18n="ok">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="customPromptModal">
+        <div class="modal" style="max-width: 350px; text-align: center;">
+            <div class="modal-header" style="justify-content: center; margin-bottom: 10px;">
+                <h2 id="promptTitle" style="font-size: 18px;" data-i18n="input_data">Ввод данных</h2>
+            </div>
+            <div class="modal-body">
+                <p id="promptMessage" style="color: var(--text-muted); margin-bottom: 15px;" data-i18n="input_value">
+                    Введите значение:</p>
+                <input type="text" id="promptInput"
+                    style="width: 100%; margin-bottom: 20px; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: white;">
+                <div class="modal-footer" style="justify-content: center; gap: 15px;">
+                    <button class="btn-secondary" id="promptCancelBtn" style="min-width: 100px;"
+                        data-i18n="cancel">Отмена</button>
+                    <button class="btn-primary" id="promptOkBtn" style="min-width: 100px;" data-i18n="ok">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="renameProductModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 data-i18n="rename_product">Переименовать товар</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="renameOriginalName">
+                <div class="form-group">
+                    <label data-i18n="new_name_label">Новое название (объединит товары)</label>
+                    <input type="text" id="renameNewName" data-i18n="product_name" placeholder="Название">
+                    <small style="color:var(--text-muted); display:block; margin-top:5px;" data-i18n="rename_warning">
+                        Внимание: все заказы с текущим названием будут переименованы.
+                    </small>
+                </div>
+                <button class="btn-primary" id="saveRenameBtn" style="width:100%" data-i18n="save">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Community Chat Modal -->
+    <div class="modal-overlay" id="chatModal">
+        <div class="modal chat-modal">
+            <div class="modal-header">
+                <div class="header-title">
+                    <i class="fa-solid fa-comments"></i>
+                    <h2 data-i18n="community_chat_title">Общий чат</h2>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>Live</span>
+                    </div>
+                </div>
+                <button class="close-modal" onclick="closeModal('chatModal')">&times;</button>
+            </div>
+            <div class="modal-body chat-modal-body">
+                <div class="chat-rules-banner">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <div class="rules-content">
+                        <strong data-i18n="chat_rules_title">Правила чата</strong>
+                        <p data-i18n="chat_rules_text">Запрещено: продажа товаров, спам, мат.</p>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Loaded from chat.js -->
+                </div>
+            </div>
+            <div class="modal-footer chat-modal-footer">
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" data-i18n="chat_placeholder" placeholder="Напишите сообщение...">
+                    <button class="btn-primary" id="chatSendBtn">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="welcome-overlay" id="welcomeScreen">
+        <div class="welcome-box">
+            <h1 data-i18n="welcome">Добро пожаловать в FP Tracker</h1>
+            <p data-i18n="welcome_text1">Удобный учёт продаж.</p>
+            <p data-i18n="welcome_text2">Ваши данные хранятся только в браузере.</p>
+            <button class="welcome-btn" id="welcomeStartBtn" data-i18n="welcome_btn">Начать работу</button>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <div class="fab-menu">
+            <button class="fab-item" onclick="openModal('orderModal')">
+                <i class="fa-solid fa-cart-plus"></i>
+            </button>
+            <button class="fab-item" id="fabOpenSupport">
+                <i class="fa-solid fa-comments"></i>
+            </button>
+        </div>
+        <button class="fab-main" id="fabToggle">
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
+
+    <div class="modal-overlay" id="historyModal">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2 data-i18n="recent_history">История действий</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="historyList" class="history-list">
+                    <!-- Logs injected here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="clearHistoryBtn" data-i18n="reset">Очистить</button>
+                <button class="btn-primary close-modal" data-i18n="ok">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="custom_select.js"></script>
+    <script src="achievements.js"></script>
+    <script src="chat.js"></script>
+    <script src="snow.js"></script>
+    <script src="script.js?v=3.6"></script>
+</body>
+
+</html>

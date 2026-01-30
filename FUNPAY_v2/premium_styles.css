@@ -1,0 +1,83 @@
+/* --- Premium Modal & Lock Styles --- */
+
+.premium-modal .modal-content {
+    max-width: 400px;
+    text-align: center;
+}
+
+.premium-icon {
+    font-size: 2rem;
+    color: #ff9900;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px rgba(255, 153, 0, 0.5));
+}
+
+.theme-premium-preview {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.preview-box.gold-gradient-preview-large {
+    width: 200px;
+    height: 100px;
+    border-radius: 12px;
+    background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.premium-desc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--text-main);
+    margin-bottom: 20px;
+}
+
+.premium-features {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.premium-features .feature {
+    margin: 8px 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.premium-features .feature i {
+    color: #4caf50;
+    margin-right: 10px;
+}
+
+.buy-btn {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+}
+
+/* Locked Theme Card UI */
+.premium-theme-card .theme-preview {
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-lock-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    opacity: 0.8;
+}
+
+body.gold-gradient-theme .premium-theme-card .theme-lock-icon {
+    display: none;
+}
